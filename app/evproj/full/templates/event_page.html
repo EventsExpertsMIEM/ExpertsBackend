@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{event.name}}</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="/static/creative/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="/static/creative/css/creative.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/home">HOME</a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">EVENT - {{event.name}}</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#description">Description</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#participants">Participants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                    </li>
+
+                    {% if current_user.is_authenticated %}
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.mail}}</span>
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="/cabinet">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/create_event">
+                                <i class="fas fa-calendar-plus fa-sm fa-fw mr-2 ml-auto my-2 my-lg-0"></i> Create event
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">REGISTER</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-10 align-self-end">
+                    <h1 class="text-uppercase text-white font-weight-bold">{{event.name}}</h1>
+                    <hr class="divider my-4">
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                    <p class="text-white-75 font-weight-light mb-5">{{event.sm_description}}</p>
+                    <hr class="divider my-4">
+                    <p class="text-white-75 font-weight-light mb-5">{{event.date_time}}</p>
+                    <a class="btn btn-light btn-xl js-scroll-trigger" href="#description">Описание</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- description Section -->
+    <section class="page-section" id="description" style="height: 100vh;">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mt-0">Что же будет?</h2>
+                    <hr class="divider dark my-4">
+                    <p class="mb-4">{{event.description}}</p>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="#participants">Участники</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section bg-primary" id="participants" style="height: 100vh;">
+        <div class="container">
+            <h2 class="text-white text-center mt-0">Кто же будет?</h2>
+            <hr class="divider light my-4">
+            <div class="card-deck">
+                {% for user in users.values() %}
+                <div class="col-lg-4">
+                    <div class="card mb-4 text-center" style="background-color: rgba(245, 245, 245, 0) !important; border: none;">
+                        <div class="card-body">
+                            <i class="fas fa-4x fa-gem text-white mb-4"></i>
+                            <h4 class="card-title text-white">{{user.get('name', '')}} {{user.get('surname', '')}}</h4>
+                            <p class="card-text text-white-50">{{user.get('participation_level', '')}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="page-section bg-dark text-white">
+        <div class="container text-center">
+            {% if current_user.is_authenticated %}
+                {% if entering == 'creator' %}
+                <h2 class="mb-4" id="join_conf">Подтвержденных = {{conf}}</h2>
+                <h2 class="mb-4" id="join_unconf">Неподтвержденных = {{unconf}}</h2>
+
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in unc_users.values() %}
+                        <tr>
+                            <td>{{user.get('name', '')}}</td>
+                            <td>{{user.get('surname', '')}}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-icon-split b_action" id="{{event.id}};{{user.get('id', '')}};confirmed" data-toggle="tooltip">
+                                    <span class="icon">
+                                <i class="fas fa-check-circle"></i>
+                            </span>
+                                    <span class="text">Yes</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-icon-split b_action" id="{{event.id}};{{user.get('id', '')}};declined" data-toggle="tooltip">
+                                    <span class="icon">
+                                <i class="fas fa-times-circle"></i>
+                            </span>
+                                    <span class="text">Nope</span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% elif entering == 'presenter' %}
+                <h2 class="mb-4">Подтвержденных = {{conf}}</h2>
+                <h2 class="mb-4">Неподтвержденных = {{unconf}}</h2>
+                {% elif entering == 'guest' %}
+                <h2 class="mb-4">Спасибо за подачу заявки!</h2>
+                {% else %}
+                <h2 class="mb-4" id="text_join">Хочешь принять участие?</h2>
+                <a class="btn btn-light btn-xl b_join" id="{{event.id}}">ДА!</a>
+                {% endif %}
+            {% else %}
+                <h2 class="mb-4" id="text_join">Хочешь принять участие?</h2>
+                <a class="btn btn-light btn-xl b_join" id="{{event.id}}">ДА!</a>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="page-section" id="contact" style="height: 100vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mt-0">Возникли вопросы?</h2>
+                    <hr class="divider my-4">
+                    <p class="text-muted mb-5">Свяжитесь с нами и обсудите все детали.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+                    <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                    <div>{{event.phone}}</div>
+                </div>
+                <div class="col-lg-4 mr-auto text-center">
+                    <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                    <!-- Make sure to change the email address in anchor text AND the link below! -->
+                    <a class="d-block" href="mailto:{{event.mail}}">{{event.mail}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-5">
+        <div class="container">
+            <div class="small text-center text-muted">Copyright &copy; 2019 - EvExProj</div>
+        </div>
+    </footer>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/creative/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/creative/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/static/creative/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/creative/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="/static/creative/js/creative.min.js"></script>
+
+    <script src="/static/custom_js/guests_moves.js"></script>
+
+    <script src="/static/custom_js/join.js"></script>
+
+</body>
+
+</html>
