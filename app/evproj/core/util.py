@@ -2,6 +2,7 @@ import random
 import string
 import smtplib
 from email.message import EmailMessage
+
 from .. import cfg
 
 
