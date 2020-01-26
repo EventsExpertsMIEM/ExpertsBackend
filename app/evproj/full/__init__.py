@@ -1,5 +1,4 @@
-from .. import cfg
-from .. import api
+from .. import cfg, api, questions
 from ..core import auth
 from . import views
 
@@ -22,6 +21,7 @@ app.config.update(
 
 app.register_blueprint(views.bp)
 app.register_blueprint(api.bp)
+app.register_blueprint(questions.bp)
 app.register_error_handler(404, views.page_not_found)
 
 logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',

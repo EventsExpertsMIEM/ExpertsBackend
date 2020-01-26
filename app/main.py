@@ -6,7 +6,7 @@ from passlib.hash import sha256_crypt
 
 
 def main():
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     parser = ArgumentParser(description='Backend service of Events project')
 
     parser.add_argument('role', metavar='role', type=str,

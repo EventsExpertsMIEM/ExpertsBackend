@@ -1,0 +1,17 @@
+{% extends "blank.html" %}
+
+{% block title %}
+<title>Question page</title>
+{% endblock %}
+
+{% block head %}
+Question: "{{question.question}}"
+{% endblock %}
+
+{% block content %}
+    <p>Rating: {{ question.rating }}</p>
+    <p>Views: {{ question.views }}</p>
+    <p>{{ question.get_author_name() }} задал вопрос {{ question.created }}</p>
+    <h3>{{ question.question }}</h3>
+    <div>{{ question.desc }}</div>
+{% endblock %}

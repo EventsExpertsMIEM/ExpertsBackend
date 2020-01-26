@@ -1,16 +1,13 @@
 from sqlalchemy import (Column, Integer, String, ForeignKey,
                         DateTime, Boolean, UniqueConstraint)
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import ENUM, UUID
 from flask_login import UserMixin
 
 from datetime import datetime
 import uuid
 
+from . import Base
 from .. import cfg
-
-
-Base = declarative_base()
 
 
 Status = ENUM('active', 'deleted',

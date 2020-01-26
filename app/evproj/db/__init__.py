@@ -1,13 +1,16 @@
-from .. import cfg
-from .models import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 from contextlib import contextmanager
 import logging
 
+from .. import cfg
 
 _engine = create_engine(cfg.DB_CONNECTION_STRING)
 _Session = sessionmaker(bind=_engine, expire_on_commit=False)
+Base = declarative_base()
+
+from .models import *
 
 
 @contextmanager

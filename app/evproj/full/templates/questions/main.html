@@ -1,0 +1,19 @@
+{% extends "blank.html" %}
+
+{% block title %}
+<title>Questions</title>
+{% endblock %}
+
+{% block head %}
+Questions
+{% endblock %}
+
+{% block content %}
+    {% for q in questions %}
+        <div>
+            <p>Author: {{q.get_author_name()}}</p>
+            <p>Asked: {{q.created}}</p>
+            <a class="btn btn-link" href="/questions/{{q.id}}" role="button"> {{q.question}} </a>
+        </div>
+    {% endfor %}
+{% endblock %}
