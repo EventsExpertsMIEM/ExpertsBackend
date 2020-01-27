@@ -12,7 +12,6 @@ def _get_db_connection_string():
     return 'postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}'.format(**os.environ)
 
 
-cfg.DEBUG = True if os.getenv('DEBUG') else False
 cfg.CSRF_ENABLED = False if os.getenv('DISABLE_CSRF') else True
 cfg.SECRET_KEY = os.getenv('SECRET_KEY', 'Top Secret Key, do not use in production!!!')
 cfg.HOST = os.getenv('HOST_ADDR', '0.0.0.0')

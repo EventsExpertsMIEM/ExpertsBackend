@@ -12,7 +12,6 @@ import logging
 
 app = Flask(__name__)
 app.config.update(
-    DEBUG=cfg.DEBUG,
     CSRF_ENABLED=cfg.CSRF_ENABLED,
     SECRET_KEY=cfg.SECRET_KEY,
     TEMPLATES_AUTO_RELOAD=True,

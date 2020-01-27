@@ -13,6 +13,7 @@ def main():
                         help='A role of application variant: full backend (full) or RESTful backend (rest)')
     parser.add_argument('--create-tables', type=str, dest='password',
                         help='Creates data base tables before launch.')
+    parser.add_argument('--debug', action='store_true', help='Use it for activate debug mode')
 
     args = parser.parse_args()
 
@@ -21,7 +22,7 @@ def main():
 
     if args.role == 'full':
         logging.info('Starting full backend server')
-        full.run()
+        full.run(debug=args.debug)
     elif args.role == 'rest':
         logging.info('Starting restful api backend server')
         rest.run()

@@ -1,18 +1,19 @@
-from .. import cfg, api, questions
-from ..core import auth
-from . import views
+import logging
+
+from werkzeug.debug import DebuggedApplication
+from werkzeug.serving import run_with_reloader
 
 from flask import Flask
 from flask_login import LoginManager
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 
-import logging
-
+from .. import cfg, api, questions
+from ..core import auth
+from . import views
 
 app = Flask(__name__)
 app.config.update(
-    DEBUG=cfg.DEBUG,
     CSRF_ENABLED=cfg.CSRF_ENABLED,
     SECRET_KEY=cfg.SECRET_KEY,
     TEMPLATES_AUTO_RELOAD=True,
@@ -36,8 +37,19 @@ login_manager.blueprint_login_views = {
 }
 
 
-def run():
+def run(debug=False):
     monkey.patch_all(ssl=False)
-    http_server = WSGIServer((cfg.HOST, cfg.PORT), app)
-    logging.info('Started server')
-    http_server.serve_forever()
+
+    if debug:
+        app_debug = DebuggedApplication(app)
+
+        def run_debug():
+            http_server = WSGIServer((cfg.HOST, cfg.PORT), app_debug)
+            logging.info('Started server in debug mode')
+            http_server.serve_forever()
+
+        run_with_reloader(run_debug)
+    else:
+        http_server = WSGIServer((cfg.HOST, cfg.PORT), app)
+        logging.info('Started server')
+        http_server.serve_forever()
