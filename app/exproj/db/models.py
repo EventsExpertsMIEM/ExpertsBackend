@@ -6,8 +6,8 @@ from flask_login import UserMixin
 from datetime import datetime
 import uuid
 
-from . import Base
-from .. import cfg
+from . import Base, get_session
+from exproj import cfg
 
 
 Status = ENUM('active', 'deleted',
@@ -38,6 +38,10 @@ class User(Base, UserMixin):
 
     def get_id(self):
         return self.cookie_id
+
+    # def get_questions(self):
+    #     with get_session() as s:
+    #         return s.query(User).get(self.id).questions
 
 
 class Event(Base):

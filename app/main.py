@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 import logging
-from evproj import db, full, rest
+from exproj import db, full, rest
 import urllib3
 from passlib.hash import sha256_crypt
 

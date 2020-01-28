@@ -9,9 +9,10 @@ Question: "{{question.question}}"
 {% endblock %}
 
 {% block content %}
+    <p>Author: {{ question.get_author_name() }}</p>
     <p>Rating: {{ question.rating }}</p>
     <p>Views: {{ question.views }}</p>
-    <p>{{ question.get_author_name() }} задал вопрос {{ question.created }}</p>
-    <h3>{{ question.question }}</h3>
-    <div>{{ question.desc }}</div>
+    <p>Asked: {{ question.create_time }}</p>
+    <p>Question: {{ question.question }}</p>
+    <p>Desc: {{ question.desc }}</p>
 {% endblock %}

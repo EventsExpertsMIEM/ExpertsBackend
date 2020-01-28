@@ -1,0 +1,39 @@
+{% extends "blank.html" %}
+
+{% block title %}
+<title>Cabinet</title>
+{% endblock %}
+
+{% block head %}
+{{user.surname}} {{user.name}}
+{% endblock %}
+
+{% block content %}
+<h5>Мои вопросы</h5>
+<table class="table table-sm table-dark">
+    <thead>
+        <tr>
+            <th class="text-center" scope="col" style="width: 50% !important;">Name</th>
+            <th class="text-center" scope="col" style="width: 50% !important;">Asked</th>
+            <th class="text-center" scope="col" style="width: 50% !important;">Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in user.questions.all() %}
+        <tr>
+            <td class="text-center"><a class="btn btn-link" href="/questions/{{ q.id }}" role="button">{{ q.question }}</a></td>
+            <td class="text-center">{{ q.asked }}</td>
+            <td class="text-center">
+                <form method="POST" action="/questions/delete/{{ q.id }}">
+                   <button class="btn btn-link" type="submit">Удалить</button> 
+                </form>                
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

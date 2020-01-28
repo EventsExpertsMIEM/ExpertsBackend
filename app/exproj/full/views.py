@@ -8,6 +8,8 @@ from passlib.hash import sha256_crypt
 from .. import core
 from ..core import auth
 from . import forms
+from ..questions.helpers import get_user_questions
+from ..db import get_session, User
 
 
 bp = Blueprint('general', __name__)
@@ -71,13 +73,9 @@ def home():
 @bp.route('/cabinet')
 @login_required
 def cabinet():
-    as_creator, as_presenter, as_guest = core.get_user_stat(current_user.id)
     return render_template(
         '/cabinet.html',
-        user=current_user,
-        as_creator=as_creator,
-        as_presenter=as_presenter,
-        as_guest=as_guest,
+        user=User.query.get(current_user.id),
     )
 
 

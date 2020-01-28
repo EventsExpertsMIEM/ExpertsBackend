@@ -1,0 +1,32 @@
+{% extends "blank.html" %}
+
+{% block title %}
+<title>Задать вопрос</title>
+{% endblock %}
+
+{% block head %}
+Задать вопрос
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        {% from "_formhelpers.html" import render_field %}
+        <form role="form" id="f_new_question" action="" method="POST" enctype="multipart/form-data">
+            <fieldset>
+                {{form.hidden_tag()}}
+                <div class="form-group">
+                    {{ render_field(form.question, class="form-control", placeholder="enter question") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.desc, class="form-control", placeholder="enter desc") }}
+                </div>
+                <p id="message">{{ message }}</p>
+                <button type="submit" class="btn btn-primary" style="border-radius: 10rem;">Ask</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,16 +1,16 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from contextlib import contextmanager
 import logging
 
-from .. import cfg
+from exproj import cfg
 
 _engine = create_engine(cfg.DB_CONNECTION_STRING)
-_Session = sessionmaker(bind=_engine, expire_on_commit=False)
-Base = declarative_base()
-
-from .models import *
+_Session = scoped_session(sessionmaker(bind=_engine, expire_on_commit=False))
+class _Base:
+    query = _Session.query_property()
+Base = declarative_base(cls=_Base)
 
 
 @contextmanager
@@ -48,3 +48,6 @@ def create_tables(password):
         )
         s.add(root)
     logging.info('Default user with mail [root_mail] was created')
+
+
+from .models import *

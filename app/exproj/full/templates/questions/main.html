@@ -11,9 +11,10 @@ Questions
 {% block content %}
     {% for q in questions %}
         <div>
-            <p>Author: {{q.get_author_name()}}</p>
-            <p>Asked: {{q.created}}</p>
             <a class="btn btn-link" href="/questions/{{q.id}}" role="button"> {{q.question}} </a>
+            <p>Author: {{q.get_author_name()}}</p>
+            <p>Asked: {{q.create_time}}</p>
         </div>
+        <br><br>
     {% endfor %}
 {% endblock %}
